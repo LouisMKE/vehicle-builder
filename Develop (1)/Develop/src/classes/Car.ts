@@ -1,80 +1,29 @@
-// Importing Vehicle and Wheel classes
-import Vehicle from './Vehicle.js';
+import { Vehicle } from './Vehicle.js';
+import { Driveable } from '../interfaces/Driveable.js';
 import Wheel from './Wheel.js';
 
-// Car class that extends Vehicle class
-class Car extends Vehicle {
-  // Declare properties of the Car class
-  vin: string;
-  color: string;
-  make: string;
-  model: string;
-  year: number;
-  weight: number;
-  topSpeed: number;
+class Car extends Vehicle implements Driveable {
+  fuelType: string;
+  numberOfDoors: number;
   wheels: Wheel[];
 
-  // Constructor for the Car class
-  constructor(
-    vin: string,
-    color: string,
-    make: string,
-    model: string,
-    year: number,
-    weight: number,
-    topSpeed: number,
-    wheels: Wheel[]
-  ) {
-    // Call the constructor of the parent class, Vehicle
-    super();
-
-    // Initialize properties of the Car class
-    this.vin = vin;
-    this.color = color;
-    this.make = make;
-    this.model = model;
-    this.year = year;
-    this.weight = weight;
-    this.topSpeed = topSpeed;
-    // Check if the wheels array has 4 elements
-    // If not, create 4 new Wheel objects
-    // Otherwise, use the provided wheels array
-    if (wheels.length !== 4) {
-      this.wheels = [new Wheel(), new Wheel(), new Wheel(), new Wheel()];
-    } else {
-      this.wheels = wheels;
-    }
+  constructor(make: string, model: string, year: number, fuelType: string, numberOfDoors: number, maxSpeed: number) {
+    super(make, model, year, maxSpeed);
+    this.fuelType = fuelType;
+    this.numberOfDoors = numberOfDoors;
+    this.wheels = Array(4).fill(new Wheel());
   }
 
-  // Override the printDetails method from the Vehicle class
-  override printDetails(): void {
-    // Call the printDetails method of the parent class, Vehicle
-    super.printDetails();
-
-    // Print details of the Car class
-    console.log(`VIN: ${this.vin}`);
-    console.log(`Color: ${this.color}`);
+  printDetails() {
+    console.log(`\n--- Car Details ---`);
     console.log(`Make: ${this.make}`);
     console.log(`Model: ${this.model}`);
     console.log(`Year: ${this.year}`);
-    console.log(`Weight: ${this.weight} lbs`);
-    console.log(`Top Speed: ${this.topSpeed} mph`);
-
-    // Print details of the wheels
-    console.log(
-      `Wheel 1: ${this.wheels[0].getDiameter} inch with a ${this.wheels[0].getTireBrand} tire`
-    );
-    console.log(
-      `Wheel 2: ${this.wheels[1].getDiameter} inch with a ${this.wheels[1].getTireBrand} tire`
-    );
-    console.log(
-      `Wheel 3: ${this.wheels[2].getDiameter} inch with a ${this.wheels[2].getTireBrand} tire`
-    );
-    console.log(
-      `Wheel 4: ${this.wheels[3].getDiameter} inch with a ${this.wheels[3].getTireBrand} tire`
-    );
+    console.log(`Fuel Type: ${this.fuelType}`);
+    console.log(`Number of Doors: ${this.numberOfDoors}`);
+    console.log(`Max Speed: ${this.maxSpeed} mph`);  // Changed to mph
+    console.log(`Wheels: Diameter = ${this.wheels[0].diameterValue} inches, Brand = ${this.wheels[0].tireBrandValue}\n`);
   }
 }
 
-// Export the Car class as the default export
-export default Car;
+export { Car };
